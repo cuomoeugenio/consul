@@ -2,3 +2,22 @@
 
 <p>The active modules appear in the homepage in the same order as here. You can drag and drop to reorder</p>
 
+<h2>Cards</h2>
+<%= link_to "Create banner", new_admin_banner_path %>
+
+<% @widgets.each do |widget| %>
+
+<div>
+  <strong><%= t("settings.#{widget.key}") %></strong>
+</div>
+
+<%= form_for(Setting.new, url: admin_setting_path(widget), method: :put) do |f| %>
+
+  <%= f.hidden_field :value, 
+                     value: (widget.enabled? ? "" : "active") %>
+                     
+  <%= f.submit(t("admin.settings.index.features.#{widget.enabled? ? 'disable' : 'enable'}"),
+              class: "button expanded #{widget.enabled? ? 'hollow alert' : 'success'}",
+              data: {confirm: t("admin.actions.confirm")}) %>
+  <% end %>
+<% end %>

@@ -1,5 +1,4 @@
 class Banner < ActiveRecord::Base
-
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
 
@@ -13,7 +12,6 @@ class Banner < ActiveRecord::Base
   validates :post_ended_at, presence: true
 
   scope :with_active,   -> { where("post_started_at <= ?", Time.current).where("post_ended_at >= ?", Time.current) }
-
   scope :with_inactive, -> { where("post_started_at > ? or post_ended_at < ?", Time.current, Time.current) }
-
+  scope :homepage,      -> { where(page: "homepage") }
 end

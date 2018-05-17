@@ -1,0 +1,16 @@
+<h1>Feeds</h1>
+
+<% @feeds.each do |feed| %>
+  
+  <div>
+    <strong><%= feed.name %></strong>
+  </div>
+  
+  <% feed.items.limit(3).each do |item| %>    
+    <div>
+      <%= item.title %>
+    </div>
+    <br/>
+  <% end %>
+  
+<% end %>

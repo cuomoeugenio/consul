@@ -30,6 +30,9 @@
   <hr>
 <% end %>
 
+<%= render "feeds" %>
+<%= render "banners" %>
+
 <% cache [locale_and_user_status, @featured_debates, @featured_proposals, 'featured'] do %>
   <main>
     <div class="small-12 column text-center">

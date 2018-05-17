@@ -181,4 +181,8 @@ namespace :admin do
   end
 
   resource :homepage, controller: :homepage
+
+  namespace :widget do
+    resources :cards
+  end
 end

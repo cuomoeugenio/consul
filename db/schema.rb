@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323190027) do
+ActiveRecord::Schema.define(version: 20180517000548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,12 @@ ActiveRecord::Schema.define(version: 20180323190027) do
 
   add_index "annotations", ["legacy_legislation_id"], name: "index_annotations_on_legacy_legislation_id", using: :btree
   add_index "annotations", ["user_id"], name: "index_annotations_on_user_id", using: :btree
+
+  create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "banners", force: :cascade do |t|
     t.string   "title",           limit: 80
@@ -174,8 +180,8 @@ ActiveRecord::Schema.define(version: 20180323190027) do
     t.boolean  "winner",                                      default: false
     t.boolean  "incompatible",                                default: false
     t.integer  "community_id"
-    t.boolean  "visible_to_valuators",                        default: false
     t.integer  "valuator_group_assignments_count",            default: 0
+    t.boolean  "visible_to_valuators",                        default: false
   end
 
   add_index "budget_investments", ["administrator_id"], name: "index_budget_investments_on_administrator_id", using: :btree
@@ -377,6 +383,15 @@ ActiveRecord::Schema.define(version: 20180323190027) do
   end
 
   add_index "failed_census_calls", ["user_id"], name: "index_failed_census_calls_on_user_id", using: :btree
+
+  create_table "feedables", force: :cascade do |t|
+    t.string "kind"
+  end
+
+  create_table "feeds", force: :cascade do |t|
+    t.integer "feedable_id"
+    t.string  "feedable_type"
+  end
 
   create_table "flags", force: :cascade do |t|
     t.integer  "user_id"
@@ -1222,6 +1237,26 @@ ActiveRecord::Schema.define(version: 20180323190027) do
   add_index "votes", ["signature_id"], name: "index_votes_on_signature_id", using: :btree
   add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
   add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
+
+  create_table "widget_cards", force: :cascade do |t|
+    t.string "title"
+    t.text   "description"
+    t.string "link_text"
+    t.string "link_url"
+  end
+
+  create_table "widget_feedables", force: :cascade do |t|
+    t.string "kind"
+  end
+
+  create_table "widget_feeds", force: :cascade do |t|
+    t.integer "feedable_id"
+    t.string  "feedable_type"
+  end
+
+  create_table "widgets", force: :cascade do |t|
+    t.string "name"
+  end
 
   add_foreign_key "administrators", "users"
   add_foreign_key "annotations", "legacy_legislations"

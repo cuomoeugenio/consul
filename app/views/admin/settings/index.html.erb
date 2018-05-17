@@ -8,7 +8,8 @@
           <strong><%= t("settings.#{setting.key}") %></strong>
         </td>
         <td class="small-12 medium-8">
-          <%= form_for(setting, url: admin_setting_path(setting), html: { id: "edit_#{dom_id(setting)}"}) do |f| %>
+          <%= form_for(setting, url: admin_setting_path(setting), 
+                                html: { id: "edit_#{dom_id(setting)}"}) do |f| %>
             <div class="small-12 medium-6 large-9 column">
               <%= f.text_area :value, label: false, id: dom_id(setting), lines: 1 %>
             </div>
@@ -37,9 +38,13 @@
         </td>
 
         <td class="text-right">
-          <%= form_for(feature_flag, url: admin_setting_path(feature_flag), html: { id: "edit_#{dom_id(feature_flag)}"}) do |f| %>
+          <%= form_for(feature_flag, url: admin_setting_path(feature_flag), 
+                                     html: { id: "edit_#{dom_id(feature_flag)}"}) do |f| %>
 
-            <%= f.hidden_field :value, id: dom_id(feature_flag), value: (feature_flag.enabled? ? "" : "active") %>
+            <%= f.hidden_field :value, 
+                               id: dom_id(feature_flag), 
+                               value: (feature_flag.enabled? ? "" : "active") %>
+                               
             <%= f.submit(t("admin.settings.index.features.#{feature_flag.enabled? ? 'disable' : 'enable'}"),
                         class: "button expanded #{feature_flag.enabled? ? 'hollow alert' : 'success'}",
                         data: {confirm: t("admin.actions.confirm")}) %>
